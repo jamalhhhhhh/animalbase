@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATABASE // SYSTEM_SCAN</title>
+    <title>MATABASE // ICYTHECOOLEST_SCAN</title>
     <style>
         :root {
             --neon-green: #00ff41;
@@ -29,31 +29,33 @@
             width: 100%;
             max-width: 700px;
             border: 1px solid var(--neon-green);
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-            padding: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.2);
+            padding: 25px;
+            box-sizing: border-box;
         }
 
         .header {
             text-align: center;
-            border-bottom: 1px solid var(--neon-green);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            border-bottom: 2px solid var(--neon-green);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
         }
 
         .header h1 {
             margin: 0;
-            font-size: 1.5rem;
-            letter-spacing: 4px;
-            text-shadow: 2px 2px var(--purple-haze);
+            font-size: 1.8rem;
+            letter-spacing: 5px;
+            text-shadow: 3px 3px var(--purple-haze);
+            text-transform: uppercase;
         }
 
         .user-card {
             border: 1px dashed var(--neon-green);
-            padding: 15px;
+            padding: 20px;
             margin-bottom: 20px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -62,40 +64,52 @@
         .user-card:hover {
             background: rgba(0, 255, 65, 0.1);
             border-style: solid;
-            box-shadow: inset 0 0 10px var(--neon-green);
+            transform: scale(1.02);
+            box-shadow: inset 0 0 15px var(--neon-green);
         }
 
         .btn-scan {
             background: var(--neon-green);
             color: black;
             border: none;
-            padding: 8px 15px;
+            padding: 10px 20px;
             font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
+            box-shadow: 2px 2px 0px var(--purple-haze);
+        }
+
+        .btn-scan:active {
+            transform: translate(1px, 1px);
+            box-shadow: none;
         }
 
         #data-display {
             border-top: 1px solid var(--purple-haze);
             margin-top: 20px;
-            padding-top: 15px;
-            min-height: 200px;
-            max-height: 400px;
+            padding-top: 20px;
+            min-height: 250px;
+            max-height: 450px;
             overflow-y: auto;
+            background: rgba(10, 10, 10, 0.5);
         }
 
         .data-item {
-            margin: 5px 0;
+            margin: 8px 0;
             font-size: 0.9rem;
-            border-bottom: 1px solid #111;
-            padding-bottom: 2px;
+            border-bottom: 1px solid #1a1a1a;
+            padding-bottom: 4px;
+            display: flex;
+            flex-wrap: wrap;
         }
 
-        .key { color: #888; text-transform: uppercase; margin-right: 10px; }
-        .val { color: var(--neon-green); font-weight: bold; }
+        .key { color: #888; text-transform: uppercase; margin-right: 12px; min-width: 120px; }
+        .val { color: var(--neon-green); font-weight: bold; word-break: break-all; flex: 1; }
 
         .loading-text {
             color: var(--purple-haze);
+            font-size: 1.1rem;
+            text-align: center;
             animation: pulse 1s infinite;
         }
 
@@ -105,9 +119,10 @@
             100% { opacity: 0.4; }
         }
 
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: var(--purple-haze); }
+        /* Custom Scrollbar for Hacker Vibe */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--purple-haze); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -115,19 +130,22 @@
     <div class="terminal-container">
         <div class="header">
             <h1>> MATABASE_SCANNER_v2</h1>
-            <p style="font-size: 0.7rem; color: #555;">UPLINK: matabase.noahshoe08.workers.dev</p>
+            <p style="font-size: 0.7rem; color: #555; margin-top: 5px;">UPLINK_STABLE: matabase.noahshoe08.workers.dev</p>
         </div>
 
         <div class="user-card" onclick="fetchUserData()">
             <div>
-                <span style="color: #888;">TARGET:</span> 
-                <span style="font-size: 1.2rem;">ICYTHECOOLEST</span>
+                <span style="color: #888;">TARGET_USER:</span> 
+                <br>
+                <span style="font-size: 1.4rem; font-weight: bold;">ICYTHECOOLEST</span>
             </div>
-            <button class="btn-scan">INITIALIZE_SCAN</button>
+            <button class="btn-scan">SCAN_ID</button>
         </div>
 
         <div id="data-display">
-            <span style="color: #444;">[ SYSTEM READY. CLICK TARGET TO BEGIN EXTRACTION ]</span>
+            <div style="color: #444; text-align: center; margin-top: 50px;">
+                [ AWAITING_INPUT... CLICK TARGET TO BEGIN EXTRACTION ]
+            </div>
         </div>
     </div>
 
@@ -136,43 +154,70 @@
             const display = document.getElementById('data-display');
             const workerUrl = "https://matabase.noahshoe08.workers.dev/ICYTHECOOLEST";
 
-            // Show Loading State
-            display.innerHTML = '<div class="loading-text">BYPASSING_FIREWALL... <br>EXTRACTING_NAKAMA_METADATA...</div>';
+            // Initialize Loading State
+            display.innerHTML = '<div class="loading-text"><br>BYPASSING_NAKAMA_FIREWALL...<br>EXTRACTING_PAYLOAD...</div>';
 
             try {
                 const response = await fetch(workerUrl);
                 
                 if (!response.ok) {
-                    throw new Error("UPLINK_DENIED");
+                    throw new Error(`UPLINK_REJECTED_${response.status}`);
                 }
 
-                const wrapper = await response.json();
+                const rawPayload = await response.json();
                 
-                // We access .user_data because your worker wraps the API response there
-                const data = wrapper.user_data; 
+                // --- THE SMART DECODER ---
+                // This checks where the data is hiding (user_data, account_data, or the top level)
+                let actualData = null;
+                
+                if (rawPayload.user_data) {
+                    actualData = rawPayload.user_data;
+                } else if (rawPayload.account_data) {
+                    actualData = rawPayload.account_data;
+                } else {
+                    actualData = rawPayload;
+                }
 
-                // Clear the display
-                display.innerHTML = '<div style="color:var(--purple-haze); margin-bottom:10px;">[ DATA_DUMP_SUCCESSFUL ]</div>';
+                // Final check to prevent "undefined" error
+                if (!actualData || typeof actualData !== 'object') {
+                    throw new Error("EMPTY_DATA_RESPONSE");
+                }
 
-                // DYNAMIC LOOP: Prints EVERYTHING in the API
-                Object.entries(data).forEach(([key, value]) => {
+                // Render Data
+                display.innerHTML = '<div style="color:var(--purple-haze); margin-bottom:15px; border-bottom: 1px solid var(--purple-haze);">[ DATA_DUMP_COMPLETE ]</div>';
+
+                Object.entries(actualData).forEach(([key, value]) => {
                     const item = document.createElement('div');
                     item.className = 'data-item';
                     
-                    // Format arrays (like cosmetics) or objects cleanly
-                    let displayValue = value;
+                    let cleanVal = value;
+                    
+                    // Handle Arrays (Cosmetics)
                     if (Array.isArray(value)) {
-                        displayValue = value.join(', ');
-                    } else if (typeof value === 'object' && value !== null) {
-                        displayValue = JSON.stringify(value);
+                        cleanVal = value.length > 0 ? value.join(' | ') : "NULL";
+                    } 
+                    // Handle Objects
+                    else if (typeof value === 'object' && value !== null) {
+                        cleanVal = JSON.stringify(value);
+                    }
+                    // Handle empty values
+                    else if (value === null || value === "") {
+                        cleanVal = "NOT_FOUND";
                     }
 
-                    item.innerHTML = `<span class="key">${key}:</span> <span class="val">${displayValue}</span>`;
+                    item.innerHTML = `<span class="key">${key}:</span><span class="val">${cleanVal}</span>`;
                     display.appendChild(item);
                 });
 
             } catch (error) {
-                display.innerHTML = `<div style="color:red;">CRITICAL_ERROR: ${error.message}<br>Check Cloudflare Worker Status.</div>`;
+                console.error("Critical Scanner Failure:", error);
+                display.innerHTML = `
+                    <div style="color:red; text-align:center; padding: 20px; border: 1px solid red;">
+                        CRITICAL_SYSTEM_FAILURE: ${error.message}<br><br>
+                        <span style="font-size:0.7rem; color:#888;">
+                            Check if Worker URL is live and CORS is enabled.
+                        </span>
+                    </div>`;
             }
         }
     </script>
